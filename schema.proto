@@ -11,6 +11,10 @@ service TinkoffInvestAPIGateway {
   rpc GetCandles(CandlesRequest) returns (CandlesResponse) {}
 }
 
+service TinkoffInvestHistoricalGateway {
+  rpc GetCandles(CandlesRequest) returns (CandlesResponse) {}
+}
+
 message CandlesRequest {
   string figi = 1;
   uint32 interval = 2;

@@ -102,3 +102,90 @@ var TinkoffInvestAPIGateway_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "schema.proto",
 }
+
+// TinkoffInvestHistoricalGatewayClient is the client API for TinkoffInvestHistoricalGateway service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type TinkoffInvestHistoricalGatewayClient interface {
+	GetCandles(ctx context.Context, in *CandlesRequest, opts ...grpc.CallOption) (*CandlesResponse, error)
+}
+
+type tinkoffInvestHistoricalGatewayClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewTinkoffInvestHistoricalGatewayClient(cc grpc.ClientConnInterface) TinkoffInvestHistoricalGatewayClient {
+	return &tinkoffInvestHistoricalGatewayClient{cc}
+}
+
+func (c *tinkoffInvestHistoricalGatewayClient) GetCandles(ctx context.Context, in *CandlesRequest, opts ...grpc.CallOption) (*CandlesResponse, error) {
+	out := new(CandlesResponse)
+	err := c.cc.Invoke(ctx, "/schema.TinkoffInvestHistoricalGateway/GetCandles", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// TinkoffInvestHistoricalGatewayServer is the server API for TinkoffInvestHistoricalGateway service.
+// All implementations must embed UnimplementedTinkoffInvestHistoricalGatewayServer
+// for forward compatibility
+type TinkoffInvestHistoricalGatewayServer interface {
+	GetCandles(context.Context, *CandlesRequest) (*CandlesResponse, error)
+	mustEmbedUnimplementedTinkoffInvestHistoricalGatewayServer()
+}
+
+// UnimplementedTinkoffInvestHistoricalGatewayServer must be embedded to have forward compatible implementations.
+type UnimplementedTinkoffInvestHistoricalGatewayServer struct {
+}
+
+func (UnimplementedTinkoffInvestHistoricalGatewayServer) GetCandles(context.Context, *CandlesRequest) (*CandlesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCandles not implemented")
+}
+func (UnimplementedTinkoffInvestHistoricalGatewayServer) mustEmbedUnimplementedTinkoffInvestHistoricalGatewayServer() {
+}
+
+// UnsafeTinkoffInvestHistoricalGatewayServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TinkoffInvestHistoricalGatewayServer will
+// result in compilation errors.
+type UnsafeTinkoffInvestHistoricalGatewayServer interface {
+	mustEmbedUnimplementedTinkoffInvestHistoricalGatewayServer()
+}
+
+func RegisterTinkoffInvestHistoricalGatewayServer(s grpc.ServiceRegistrar, srv TinkoffInvestHistoricalGatewayServer) {
+	s.RegisterService(&TinkoffInvestHistoricalGateway_ServiceDesc, srv)
+}
+
+func _TinkoffInvestHistoricalGateway_GetCandles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CandlesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TinkoffInvestHistoricalGatewayServer).GetCandles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/schema.TinkoffInvestHistoricalGateway/GetCandles",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TinkoffInvestHistoricalGatewayServer).GetCandles(ctx, req.(*CandlesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// TinkoffInvestHistoricalGateway_ServiceDesc is the grpc.ServiceDesc for TinkoffInvestHistoricalGateway service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var TinkoffInvestHistoricalGateway_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "schema.TinkoffInvestHistoricalGateway",
+	HandlerType: (*TinkoffInvestHistoricalGatewayServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetCandles",
+			Handler:    _TinkoffInvestHistoricalGateway_GetCandles_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "schema.proto",
+}
